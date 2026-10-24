@@ -1,0 +1,108 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>__TITLE__</title>
+<style>
+:root{color-scheme:light;--bg:#f4f4f2;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--grid:#dcdbd6;--s1:#2a78d6;--s2:#eb6834;--t0:#2a78d6;--t1:#eb6834;--t2:#1baf7a;--t3:#eda100;--t4:#e87ba4;--t5:#008300;--t6:#6250d6;--t7:#e34948;--t8:#8a8985}
+@media (prefers-color-scheme:dark){:root{color-scheme:dark;--bg:#111110;--surface:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--grid:#3a3a37;--s1:#3987e5;--s2:#d95926;--t0:#3987e5;--t1:#d95926;--t2:#199e70;--t3:#c98500;--t4:#d55181;--t5:#008300;--t6:#9085e9;--t7:#e66767;--t8:#9a9993}}
+body{margin:0;padding:24px 16px;background:var(--bg);color:var(--ink);font:14px/1.4 system-ui,sans-serif}
+main{max-width:1200px;margin:0 auto}h1{font-size:22px;margin:0 0 4px}.sub{color:var(--ink2);margin:0 0 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:16px}
+.card{background:var(--surface);border-radius:12px;padding:16px}h2{font-size:16px;margin:0}
+.note{color:var(--ink2);margin:2px 0 8px;font-size:13px}svg{width:100%;height:auto;display:block}
+.axis{stroke:var(--grid);stroke-width:1}.bar.s1,.sw.s1{fill:var(--s1);background:var(--s1)}.bar.s2{fill:var(--s2)}.sw.s2{background:var(--s2)}
+.bar{transition:opacity .1s}svg:has(.hit:hover) .bar{opacity:.55}
+text{fill:var(--ink2);font-size:12px}.val{fill:var(--ink);text-anchor:middle;font-weight:600}.val.l{text-anchor:start}
+.lab{text-anchor:middle}.lab.r{text-anchor:end;fill:var(--ink)}.hit{fill:transparent}
+.legend{display:flex;gap:16px;color:var(--ink2);font-size:13px;margin-bottom:4px}.sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px}
+details{margin-top:8px;color:var(--ink2);font-size:13px}summary{cursor:pointer}
+table{border-collapse:collapse;margin-top:6px}td,th{padding:2px 12px 2px 0;text-align:left;font-variant-numeric:tabular-nums}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--surface);padding:4px 8px;border-radius:6px;font-size:12px;display:none}
+
+.cards{margin-top:16px}.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 12px}
+.toolbar input,.toolbar select{background:var(--bg);color:var(--ink);border:1px solid var(--grid);border-radius:8px;padding:6px 10px;font:inherit;font-size:13px}
+.toolbar input{min-width:180px;flex:1 1 180px}.seg{display:flex;border:1px solid var(--grid);border-radius:8px;overflow:hidden}
+.seg button{background:none;border:0;color:var(--ink2);padding:6px 12px;font:inherit;font-size:13px;cursor:pointer}.seg button.on{background:var(--ink);color:var(--surface)}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.tile{display:flex;flex-direction:column;gap:4px;color:inherit;text-decoration:none}
+.tile .art{border-radius:8px;overflow:hidden;background:var(--bg);aspect-ratio:488/680}
+.tile img{width:100%;height:100%;object-fit:cover;display:block}.tile .ph{padding:10px;font-size:12px;color:var(--ink2)}
+.tile .cap{display:flex;gap:6px;align-items:center;font-size:12px;min-height:18px}.tile .cap span.n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pill{flex:none;font-size:11px;font-weight:600;padding:1px 7px;border-radius:999px;color:#fff}
+.pill.list{background:var(--s1)}.pill.retrieved{background:var(--s2)}
+table.cl{width:100%;font-size:13px}table.cl th{cursor:pointer;color:var(--ink2);font-weight:600;padding:4px 10px 4px 0;white-space:nowrap}
+table.cl td{padding:3px 10px 3px 0;border-top:1px solid var(--grid)}table.cl a{color:var(--ink)}
+
+.wide{grid-column:1/-1}.tmap{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px}
+@media (max-width:820px){.tmap{grid-template-columns:1fr}}
+.tmap svg{background:var(--bg);border-radius:8px}
+.pt{stroke:var(--surface);stroke-width:1.5;cursor:default}.pt.ring{fill:none!important;stroke-width:2}.pt:hover{stroke:var(--ink)}
+.dim .pt{opacity:.15}.dim .pt.on{opacity:1}
+.tlab{fill:var(--ink);font-size:12px;font-weight:700;text-anchor:middle;paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round;pointer-events:none}
+.tl{display:flex;flex-direction:column;gap:2px}.tl button{display:grid;grid-template-columns:14px 1fr auto;gap:8px;align-items:start;text-align:left;background:none;border:0;border-radius:8px;padding:6px 8px;color:var(--ink);font:inherit;font-size:13px;cursor:pointer}
+.tl button:hover,.tl button.on{background:var(--bg)}.tl i{width:12px;height:12px;border-radius:3px;margin-top:3px}.tl small{color:var(--ink2);display:block;font-size:12px}
+.tl .n{color:var(--ink2);font-variant-numeric:tabular-nums;font-size:12px;text-align:right}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
+.t0{fill:var(--t0)}.bg0{background:var(--t0)}.t1{fill:var(--t1)}.bg1{background:var(--t1)}.t2{fill:var(--t2)}.bg2{background:var(--t2)}.t3{fill:var(--t3)}.bg3{background:var(--t3)}.t4{fill:var(--t4)}.bg4{background:var(--t4)}.t5{fill:var(--t5)}.bg5{background:var(--t5)}.t6{fill:var(--t6)}.bg6{background:var(--t6)}.t7{fill:var(--t7)}.bg7{background:var(--t7)}.t8{fill:var(--t8)}.bg8{background:var(--t8)}</style></head><body><main>
+<h1>__TITLE__</h1><p class="sub">__SUB__</p><div class="grid">__PANELS__</div>
+<section class="card cards" id="cards-sec"><h2>Cards</h2><p class="note" id="count"></p>
+<div class="toolbar"><input id="q" type="search" placeholder="Search name or type">
+<select id="f-rarity"></select><select id="f-color"></select><select id="f-source"></select><select id="f-theme"></select>
+<select id="sort"><option value="order">Original order</option><option value="name">Name</option><option value="cmc">Mana value</option><option value="rarity">Rarity</option><option value="color">Color</option><option value="theme">Theme</option></select>
+<div class="seg"><button data-view="gallery" class="on">Images</button><button data-view="table">Table</button></div></div>
+<div id="view"></div></section></main><div id="tip"></div>
+<script>
+const tip=document.getElementById('tip');
+document.querySelectorAll('.hit,.pt').forEach(r=>{
+ r.addEventListener('mousemove',e=>{tip.textContent=r.dataset.tip;tip.style.display='block';tip.style.left=e.clientX+12+'px';tip.style.top=e.clientY+12+'px'});
+ r.addEventListener('mouseleave',()=>tip.style.display='none');});
+</script><script>
+const CARDS=__DATA__;
+const RAR=['common','uncommon','rare','mythic'],COL=['White','Blue','Black','Red','Green','Multicolor','Colorless','Land'];
+const st={view:'gallery',q:'',rarity:'',color:'',source:'',theme:'',sort:'order'};
+const $=id=>document.getElementById(id);
+function fill(id,label,vals){const el=$(id);if(vals.length<2){el.style.display='none';return}
+ el.innerHTML='';const o=document.createElement('option');o.value='';o.textContent='All '+label;el.appendChild(o);
+ vals.forEach(v=>{const x=document.createElement('option');x.value=v;x.textContent=v;el.appendChild(x)});
+ el.onchange=()=>{st[id.slice(2)]=el.value;if(id==='f-theme')syncTheme();render()}}
+const uniq=k=>[...new Set(CARDS.map(c=>c[k]).filter(v=>v!==null&&v!==undefined&&v!==''))];
+fill('f-rarity','rarities',RAR.filter(r=>uniq('rarity').includes(r)));
+fill('f-color','colors',COL.filter(c=>uniq('color').includes(c)));
+fill('f-source','sources',uniq('source'));
+fill('f-theme','themes',uniq('theme').map(String).sort((a,b)=>a-b));
+function syncTheme(){document.querySelectorAll('[data-theme-btn]').forEach(x=>x.classList.toggle('on',x.dataset.themeBtn===st.theme));
+ const sv=$('tsvg');if(sv){sv.classList.toggle('dim',!!st.theme);sv.querySelectorAll('.pt').forEach(p=>p.classList.toggle('on',p.dataset.theme===st.theme))}}
+document.querySelectorAll('[data-theme-btn]').forEach(b=>b.onclick=()=>{const t=b.dataset.themeBtn;st.theme=st.theme===t?'':t;
+ if($('f-theme'))$('f-theme').value=st.theme;syncTheme();render();if(st.theme)$('cards-sec').scrollIntoView({behavior:'smooth'})});
+$('q').oninput=e=>{st.q=e.target.value.toLowerCase();render()};
+$('sort').onchange=e=>{st.sort=e.target.value;render()};
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{st.view=b.dataset.view;
+ document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));render()});
+const key={name:c=>c.name.toLowerCase(),cmc:c=>c.cmc,rarity:c=>RAR.indexOf(c.rarity),color:c=>COL.indexOf(c.color),theme:c=>c.theme===null||c.theme===undefined?-1:Number(c.theme)};
+function render(){
+ let rows=CARDS.filter(c=>(!st.rarity||c.rarity===st.rarity)&&(!st.color||c.color===st.color)&&(!st.source||c.source===st.source)
+  &&(!st.theme||String(c.theme)===st.theme)&&(!st.q||(c.name+' '+c.type).toLowerCase().includes(st.q)));
+ if(st.sort!=='order'){const k=key[st.sort];rows=[...rows].sort((a,b)=>k(a)<k(b)?-1:k(a)>k(b)?1:a.name.localeCompare(b.name))}
+ $('count').textContent=rows.length+' of '+CARDS.length+' cards';
+ const v=$('view');v.innerHTML='';
+ if(st.view==='gallery'){const g=document.createElement('div');g.className='gallery';
+  rows.forEach(c=>{const a=document.createElement('a');a.className='tile';a.href=c.url||'#';a.target='_blank';a.rel='noopener';
+   a.title=c.name+' • '+c.rarity+(c.printed&&c.printed!==c.rarity?' (printed '+c.printed+')':'');
+   const art=document.createElement('div');art.className='art';
+   if(c.img){const i=document.createElement('img');i.loading='lazy';i.alt=c.name;i.src=c.img;art.appendChild(i)}
+   else{const d=document.createElement('div');d.className='ph';d.textContent=c.name+' '+c.mana;art.appendChild(d)}
+   a.appendChild(art);
+   const cap=document.createElement('div');cap.className='cap';
+   if(c.source){const p=document.createElement('span');p.className='pill '+c.source;p.textContent=c.source;cap.appendChild(p)}
+   if(c.tslot!==null&&c.tslot!==undefined){const d=document.createElement('span');d.className='dot bg'+c.tslot;d.title='theme '+c.theme;cap.appendChild(d)}
+   const n=document.createElement('span');n.className='n';n.textContent=c.name;cap.appendChild(n);a.appendChild(cap);
+   g.appendChild(a)});v.appendChild(g)}
+ else{const t=document.createElement('table');t.className='cl';
+  const cols=[['name','Name'],['rarity','Rarity'],['color','Color'],['cmc','MV'],['type','Type'],['source','Source'],['theme','Theme']].filter(([k])=>uniq(k).length||k==='name');
+  const h=t.insertRow();cols.forEach(([k,l])=>{const th=document.createElement('th');th.textContent=l;if(key[k])th.onclick=()=>{st.sort=k;$('sort').value=k;render()};h.appendChild(th)});
+  rows.forEach(c=>{const r=t.insertRow();cols.forEach(([k])=>{const td=r.insertCell();
+   if(k==='name'){const a=document.createElement('a');a.href=c.url||'#';a.target='_blank';a.rel='noopener';a.textContent=c.name;td.appendChild(a)}
+   else td.textContent=c[k]===null||c[k]===undefined?'':c[k]})});v.appendChild(t)}
+}
+if(location.hash==='#table'){st.view='table';document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x.dataset.view==='table'))}
+render();
+</script>
+</body></html>

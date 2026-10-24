@@ -1,0 +1,58 @@
+[project]
+name = "mtg-cube-builder"
+version = "0.1.0"
+description = "Turn a list of Magic cards into a set shaped like a real expansion, and generate booster packs from it."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.0",
+    "safetensors>=0.4",
+    "scikit-learn>=1.9.1",
+    "scipy>=1.18.1",
+    "torch>=2.14.1",
+    "transformers>=5.20.2",
+]
+
+[project.scripts]
+mtg-cube-builder = "mtg_cube_builder.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mtg_cube_builder"]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.8"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+# Google Python Style Guide, enforced: 80 columns, Google-format docstrings,
+# sorted imports, no relative imports. `experiments/` is research code and is
+# not held to it.
+[tool.ruff]
+line-length = 80
+indent-width = 4
+target-version = "py312"
+src = ["src", "tests"]
+extend-exclude = ["experiments"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "N", "UP", "B", "D", "TID"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.isort]
+force-single-line = true
+single-line-exclusions = ["typing", "collections.abc"]
+force-sort-within-sections = true
+known-first-party = ["mtg_cube_builder"]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "all"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["D"]

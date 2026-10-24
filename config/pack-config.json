@@ -1,0 +1,56 @@
+{
+  "seed": null,
+  "packs": 36,
+  "cards": "output/set-fra.json",
+  "output": "output/packs.json",
+  "allowDuplicatesInPack": false,
+  "maxCopiesPerBox": null,
+  "exclude": {
+    "typeIncludes": [
+      "Basic Land"
+    ]
+  },
+  "slots": [
+    {
+      "name": "Common",
+      "count": 6,
+      "filter": {
+        "rarity": [
+          "common"
+        ]
+      }
+    },
+    {
+      "name": "Uncommon",
+      "count": 4,
+      "filter": {
+        "rarity": [
+          "uncommon"
+        ]
+      }
+    },
+    {
+      "name": "Rare or Mythic",
+      "count": 1,
+      "filter": {
+        "rarity": [
+          "rare",
+          "mythic"
+        ]
+      },
+      "rarityWeights": {
+        "rare": 7,
+        "mythic": 1
+      }
+    },
+    {
+      "name": "Land",
+      "count": 1,
+      "filter": {
+        "typeIncludes": [
+          "Land"
+        ]
+      }
+    }
+  ]
+}

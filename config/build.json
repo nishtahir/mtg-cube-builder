@@ -1,0 +1,17 @@
+{
+  "template": "khm",
+  "max_cost": 1.5,
+  "w_color": 2.0,
+  "w_type": 1.5,
+  "w_cmc": 0.5,
+  "w_rarity": 0.4,
+  "w_coh": 5.0,
+  "w_sim": 0.0,
+  "w_fill_sim": 0.0,
+  "themes": 8,
+  "theme_alpha": 0.5,
+  "price_step": 0.5,
+  "w_balance": 0.3,
+  "max_iter": 30,
+  "knn": 10
+}
